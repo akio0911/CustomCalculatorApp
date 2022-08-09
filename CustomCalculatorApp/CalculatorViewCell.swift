@@ -20,12 +20,12 @@ class CalculatorViewCell: UICollectionViewCell {
     }
     let numberLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
         
         label.font = .boldSystemFont(ofSize: 20)
         label.clipsToBounds = true
-        label.backgroundColor = .orange
+        label.backgroundColor = .darkGray
         return label
     }()
     
@@ -35,7 +35,7 @@ class CalculatorViewCell: UICollectionViewCell {
         
         
         numberLabel.frame.size = self.frame.size
-        numberLabel.layer.cornerRadius = self.frame.height / 3
+        numberLabel.layer.cornerRadius = self.frame.height / 5
     }
     
     required init?(coder: NSCoder) {
