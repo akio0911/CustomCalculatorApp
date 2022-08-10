@@ -14,6 +14,7 @@
 		6938207F289FB49000A33D0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6938207E289FB49000A33D0F /* Assets.xcassets */; };
 		69382082289FB49000A33D0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69382080289FB49000A33D0F /* LaunchScreen.storyboard */; };
 		6938208A289FB4FC00A33D0F /* CalculatorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69382089289FB4FC00A33D0F /* CalculatorViewCell.swift */; };
+		69EFC70E28A3517200F0E5EA /* CalculatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC70D28A3517200F0E5EA /* CalculatorView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		69382081289FB49000A33D0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69382083289FB49000A33D0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69382089289FB4FC00A33D0F /* CalculatorViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewCell.swift; sourceTree = "<group>"; };
+		69EFC70D28A3517200F0E5EA /* CalculatorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalculatorView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				69382079289FB48F00A33D0F /* ViewController.swift */,
 				69382089289FB4FC00A33D0F /* CalculatorViewCell.swift */,
 				6938207B289FB48F00A33D0F /* Main.storyboard */,
+				69EFC70D28A3517200F0E5EA /* CalculatorView.xib */,
 				6938207E289FB49000A33D0F /* Assets.xcassets */,
 				69382080289FB49000A33D0F /* LaunchScreen.storyboard */,
 				69382083289FB49000A33D0F /* Info.plist */,
@@ -80,6 +83,7 @@
 				6938206E289FB48F00A33D0F /* Sources */,
 				6938206F289FB48F00A33D0F /* Frameworks */,
 				69382070289FB48F00A33D0F /* Resources */,
+				69402A3528A463C600DA9FD2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -128,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69EFC70E28A3517200F0E5EA /* CalculatorView.xib in Resources */,
 				69382082289FB49000A33D0F /* LaunchScreen.storyboard in Resources */,
 				6938207F289FB49000A33D0F /* Assets.xcassets in Resources */,
 				6938207D289FB48F00A33D0F /* Main.storyboard in Resources */,
@@ -135,6 +140,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		69402A3528A463C600DA9FD2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6938206E289FB48F00A33D0F /* Sources */ = {

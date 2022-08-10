@@ -8,7 +8,6 @@
 import UIKit
 
 class CalculatorViewCell: UICollectionViewCell {
-    
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
@@ -28,16 +27,15 @@ class CalculatorViewCell: UICollectionViewCell {
         label.backgroundColor = .darkGray
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(numberLabel)
-        
-        
+
         numberLabel.frame.size = self.frame.size
         numberLabel.layer.cornerRadius = self.frame.height / 5
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
