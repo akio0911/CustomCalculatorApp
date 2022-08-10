@@ -10,11 +10,11 @@ import UIKit
 class ViewController: UIViewController {
 
     let numbers = [
-        ["税込"],
+//        ["税込10%"],
         ["7","8","9","÷"],
         ["4","5","6","×"],
         ["1","2","3","-"],
-        ["0","⌫","=","+"],
+        ["0","OK","⌫","+"],
     ]
     
     let cellId = "cellId"
@@ -36,8 +36,8 @@ class ViewController: UIViewController {
         calculatorCollectionView.dataSource = self
         calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: cellId)
         calculatorHeightConstraint.constant = view.frame.width * 1 - 10
-        calculatorCollectionView.backgroundColor = .lightGray
-        calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
+        calculatorCollectionView.backgroundColor = .white
+        calculatorCollectionView.contentInset = .init(top: 0, left:30, bottom: 0, right: 30)
 
         answerLabel.text = "0"
         formulaLabel.text = "0"
@@ -67,9 +67,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         width = ((collectionView.frame.width - 100)) / 4
         let height = width
         
-//        if indexPath.section == 4 && indexPath.row == 0 {
-//            width = width * 4
-//        }
+//                if indexPath.section == 0 && indexPath.row == 0 {
+//                    width = width * 4
+//                    height = height / 2
+//                }
         return .init(width: width, height: height)
     }
     
@@ -82,17 +83,18 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         cell.numberLabel.text = numbers[indexPath.section][indexPath.row]
         
         numbers[indexPath.section][indexPath.row].forEach { (numberString) in
-            if "0"..."9" ~= numberString || numberString.description == "." {
-                cell.numberLabel.backgroundColor = .white
-            }else if numberString == "⌫" {
+
+            if "0"..."9" ~= numberString {
                 cell.numberLabel.backgroundColor = .lightGray
-                cell.numberLabel.textColor = .black
-            }else if numberString == "÷" || numberString == "×" || numberString == "+" || numberString == "-" || numberString == "="{
-                
+            }else if numberString == "⌫" {
+                cell.numberLabel.backgroundColor = .systemGray
+            }else if numberString == "÷" || numberString == "×" || numberString == "+" || numberString == "-" {
+                cell.numberLabel.backgroundColor = .systemGray
+            }else if numberString.description == "O" || numberString.description == "K" {
+                cell.numberLabel.textColor = .red
                 cell.numberLabel.backgroundColor = .systemGray
             }else {
-                cell.numberLabel.backgroundColor = .lightGray
-                cell.numberLabel.textColor = .black
+                cell.numberLabel.backgroundColor = .systemGray
             }
             
         }
@@ -118,13 +120,9 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         case "+", "-", "×", "÷":
             
             formulaLabel.text = formulaText.removingDuplicateSymbols() + number
+            let answer = formattedAnswer(formulaLabel.text ?? "0")
+            answerLabel.text = answer
 
-//        case ".":
-//            if formulaLabel.text == "0" {
-//                formulaLabel.text = "0."
-//            }else {
-//                formulaLabel.text = formulaText.removingDuplicateSymbols() + number
-//            }
         case "⌫":
             guard let deleteBackward = formulaLabel.text?.dropLast() else { return }
             if formulaLabel.text?.count == 1 {
@@ -132,9 +130,14 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
             } else {
                 formulaLabel.text = String(deleteBackward)
             }
-        case "=":
+        case "OK":
             let answer = formattedAnswer(formulaLabel.text ?? "0")
-            print(answer)
+            answerLabel.text = answer
+        case "税込10%":
+            var answer = formattedAnswer(formulaLabel.text ?? "0")
+            let taxAnswer = (Double(answer) ?? 0) * 1.1
+            print(floor(taxAnswer))
+            answer = String(Int(floor(taxAnswer)))
             answerLabel.text = answer
         default :
             break
@@ -146,15 +149,16 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
                                                                     options: NSString.CompareOptions.regularExpression,
                                                                     range: nil
         ).replacingOccurrences(of: "÷", with: "/").replacingOccurrences(of: "×", with: "*")
-        if formattedFormula.hasSuffix("+") || formattedFormula.hasSuffix("-") || formattedFormula.hasSuffix("*") || formattedFormula.hasSuffix("/") || formattedFormula.hasSuffix(".") {
+        if formattedFormula.hasSuffix("+") || formattedFormula.hasSuffix("-") || formattedFormula.hasSuffix("*") || formattedFormula.hasSuffix("/") {
             let replaceFormula = String(formattedFormula.dropLast())
-            print(replaceFormula)
+
             formattedFormula = replaceFormula
         }
         let expression = NSExpression(format: formattedFormula)
         let answer = expression.expressionValue(with: nil, context: nil) as! Double
-        let answerString = String(answer)
-
+        // 小数点切り捨て
+        print(floor(answer))
+        let answerString = String(floor(answer))
         if answerString.hasSuffix(".0") {
             return answerString.replacingOccurrences(of: ".0", with: "")
         }
