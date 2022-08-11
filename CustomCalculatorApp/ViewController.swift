@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak private var formulaLabel: UILabel!
     @IBOutlet weak private var answerLabel: UILabel!
     @IBOutlet weak private var calculatorCollectionView: UICollectionView!
-    
     @IBOutlet weak private var calculatorHeightConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         calculatorCollectionView.delegate = self
         calculatorCollectionView.dataSource = self
         calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: cellId)
+        // 動画サイトから写経して値をいじって表現したので、意味がよく解っていない
         calculatorHeightConstraint.constant = view.frame.width * 1 - 10
         calculatorCollectionView.backgroundColor = .white
         calculatorCollectionView.contentInset = .init(top: 0, left: 30, bottom: 0, right: 30)
@@ -85,6 +86,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
                 cell.numberLabel.backgroundColor = .systemGray
             } else if numberString == "÷" || numberString == "×" || numberString == "+" || numberString == "-" {
                 cell.numberLabel.backgroundColor = .systemGray
+                // discriptionと書かなければ認識しなかったけど、descriptionって何をしているの??
             } else if numberString.description == "O" || numberString.description == "K" {
                 cell.numberLabel.textColor = .red
                 cell.numberLabel.backgroundColor = .systemGray
@@ -137,7 +139,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     func formattedAnswer(_ formula: String) -> String {
         var formattedFormula: String = formula.replacingOccurrences(of:
-                                                                        // この文の意味がよく解っていない
+                                                                        // この文言の意味がよく解っていない
                                                                         "(?<=^|[÷×\\+\\-\\(])([0-9]+)(?=[÷×\\+\\-\\)]|$)",
                                                                     with: "$1.0",
                                                                     options: NSString.CompareOptions.regularExpression,
@@ -151,7 +153,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let expression = NSExpression(format: formattedFormula)
         let answer = expression.expressionValue(with: nil, context: nil) as! Double
         // 小数点切り捨て
-        print(floor(answer))
         let answerString = String(floor(answer))
         if answerString.hasSuffix(".0") {
             return answerString.replacingOccurrences(of: ".0", with: "")
